@@ -51,17 +51,17 @@ class HBNBCommand(cmd.Cmd):
             key = current.group(0)
             if self.types[key] == str:
                 output[key] = re.search(r'(?<=")(?:\\.|[^"\\])*(?=")',
-                                        token).group(0)
+                                        token).group(0).replace("_", " ")
             elif self.types[key] == int:
                 value = re.search(r'(?<==).+', token).group(0)
                 n = re.search(r'^[+-]?\d+$', value)
                 if n:
-                    output[key] = n.group(0)
+                    output[key] = int(n.group(0))
             elif self.types[key] == float:
                 value = re.search(r'(?<==).+', token).group(0)
                 n = re.search(r'^[+-]?([0-9]*[.])?[0-9]+$', value)
                 if n:
-                    output[key] = n.group(0)
+                    output[key] = float(n.group(0))
         return output
 
     def preloop(self):
@@ -156,7 +156,10 @@ class HBNBCommand(cmd.Cmd):
         elif name not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
-        new_instance = HBNBCommand.classes[name](self.strtok(args))
+        input = self.strtok(args)
+        new_instance = HBNBCommand.classes[name]()
+        for k, v in input.items():
+            setattr(new_instance, k, v)
         storage.save()
         print(new_instance.id)
         storage.save()
