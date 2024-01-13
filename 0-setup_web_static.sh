@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #setup server for deploy static
 sudo apt update
-sudo apt install nginx
+sudo apt install nginx -y
 mkdir -p /data/web_static/shared/
 mkdir -p /data/web_static/releases/test/
 echo "<html>
