@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 #setup server for deploy static
+sudo apt update
+sudo apt install nginx
 mkdir -p /data/web_static/shared/
 mkdir -p /data/web_static/releases/test/
 echo "HBNB Static" > /data/web_static/releases/test/index.html
